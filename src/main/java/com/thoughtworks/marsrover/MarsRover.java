@@ -10,7 +10,7 @@ import static com.thoughtworks.marsrover.Command.L;
 public class MarsRover {
   private Position position;
   private Direction direction;
-  private final Map<Command, Runnable> commandToAction;
+  private static Map<Command, Runnable> commandToAction;
 
   public MarsRover() {
     this.commandToAction = new HashMap<>();
@@ -19,13 +19,40 @@ public class MarsRover {
     commandToAction.put(R, this::turnRight);
   }
 
+  public Position getPosition() {
+    return position;
+  }
+
+  public Direction getDirection() {
+    return direction;
+  }
+
+  public static void command(Command command) {
+   commandToAction.get(command).run();
+  }
+
   private void turnRight() {
+    direction = direction.right();
   }
 
   private void turnLeft() {
+    direction = direction.left();
   }
 
   private void move() {
+    int x = this.position.getX();
+    int y = this.position.getY();
+    switch (this.direction){
+      case E:
+        x += 1;
+      case N:
+        y += 1;
+      case S:
+        y -= 1;
+      case W:
+        x -= 1;
+    }
+    this.position = new Position(x, y);
   }
 
   public void init(Integer x, Integer y, Direction direction) {
