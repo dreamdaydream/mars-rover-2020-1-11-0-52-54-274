@@ -1,5 +1,5 @@
 package com.thoughtworks.marsrover;
 
-public enum Command {
-  M, L, R
+public interface Command {
+  MarsRoverState doOperation(MarsRoverState marsRoverState);
 }
