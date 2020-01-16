@@ -5,18 +5,18 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 public class MarsRoverTest {
-  @Test
-  public void should_return() {
-    MarsRover marsRover = new MarsRover();
-    marsRover.init(1,1, Direction.E);
-    List<Command> commands = Arrays.asList(Command.L, Command.M);
-    commands.forEach(MarsRover::command);
 
-    assertEquals(marsRover.getPosition().getX(), Integer.valueOf(0));
-    assertEquals(marsRover.getPosition().getY(), Integer.valueOf(1));
-    assertEquals(marsRover.getDirection(), Direction.N);
+  @Test
+  public void should_operation_given_a_state() {
+    MarsRoverState marsRoverState = new MarsRoverState(0,0, Direction.E);
+    MarsRover marsRover = new MarsRover(marsRoverState);
+    List<Command> commands = Arrays.asList(new Move(), new TurnLeft());
+    marsRover.doOperation(commands);
+
+    assertEquals(new MarsRoverState(1,0, Direction.N), marsRover.getMarsRoverState());
+
   }
 }
